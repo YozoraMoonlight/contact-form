@@ -1,0 +1,698 @@
+/* Import Karla font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
+
+/* ============================================
+   CSS RESET & BASE STYLES
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Karla', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   COLOR VARIABLES
+   ============================================ */
+
+:root {
+  /* Primary Colors */
+  --green-200: hsl(148, 38%, 91%);
+  --green-600: hsl(169, 82%, 27%);
+  --red: hsl(0, 66%, 54%);
+  
+  /* Neutral Colors */
+  --white: hsl(0, 0%, 100%);
+  --grey-500: hsl(186, 15%, 59%);
+  --grey-900: hsl(187, 24%, 22%);
+  
+  /* Design-specific colors */
+  --bg-beige: #f1f1ef;
+  --mint-bg: #e0f1e8;
+  --coral: #f8b9b0;
+  --blue-faint: #c7d2f0;
+  --teal-dots: #4a8a96;
+  --input-hover-bg: #f4f8f7;
+  --toast-bg: #2b4246;
+}
+
+/* ============================================
+   MAIN LAYOUT
+   ============================================ */
+
+.page-container {
+  min-height: 100vh;
+  background-color: var(--bg-beige);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Mint panel background layer */
+.mint-panel {
+  position: absolute;
+  inset: 0.5rem;
+  background-color: var(--mint-bg);
+  border-radius: 0.125rem;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ============================================
+   DECORATIVE BACKGROUND ELEMENTS
+   ============================================ */
+
+.decorative-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: none; /* Hidden on mobile */
+}
+
+/* Coral zigzag mountains - top left */
+.deco-mountain-left {
+  position: absolute;
+  top: -1.5rem;
+  left: 1rem;
+  width: 10rem;
+  height: 7rem;
+  color: var(--coral);
+}
+
+/* Coral zigzag mountains - top right */
+.deco-mountain-right {
+  position: absolute;
+  top: 2rem;
+  right: 1.5rem;
+  width: 12rem;
+  height: 6rem;
+  color: var(--coral);
+}
+
+/* Faint blue diagonal lines - left */
+.deco-lines-left {
+  position: absolute;
+  top: 33.333%;
+  left: 0;
+  width: 14rem;
+  height: 18rem;
+  color: var(--blue-faint);
+}
+
+/* Faint blue diagonal lines - bottom right */
+.deco-lines-right {
+  position: absolute;
+  bottom: 0;
+  right: 25%;
+  width: 18rem;
+  height: 16rem;
+  color: var(--blue-faint);
+}
+
+/* Teal dot grid - bottom left */
+.deco-dots {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  color: var(--teal-dots);
+}
+
+/* Show decorative elements on larger screens */
+@media (min-width: 640px) {
+  .decorative-bg {
+    display: block;
+  }
+  
+  .mint-panel {
+    inset: 2rem;
+  }
+}
+
+/* ============================================
+   SUCCESS TOAST
+   ============================================ */
+
+.success-toast {
+  position: absolute;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--toast-bg);
+  color: var(--white);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 50;
+  width: 90%;
+  max-width: 450px;
+  /* Animation will be added with JS */
+  opacity: 0;
+  transform: translateX(-50%) translateY(-100px);
+  transition: all 0.3s ease-out;
+}
+
+.success-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toast-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toast-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.toast-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.toast-message {
+  color: var(--mint-bg);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* ============================================
+   FORM CARD
+   ============================================ */
+
+.form-card {
+  position: relative;
+  z-index: 10;
+  background-color: var(--white);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 736px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  /* Stagger animation will be added with JS */
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 640px) {
+  .form-card {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .form-card {
+    padding: 2.5rem;
+  }
+}
+
+.form-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--grey-900);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.025em;
+}
+
+@media (min-width: 640px) {
+  .form-heading {
+    font-size: 1.875rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* ============================================
+   FORM LAYOUT
+   ============================================ */
+
+#contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Form row for side-by-side fields on desktop */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Form group container */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* Stagger animation classes will be added by JS */
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeInItem 0.4s ease-out forwards;
+}
+
+@keyframes fadeInItem {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger delays - will be applied by JS */
+.form-group:nth-child(1) { animation-delay: 0.08s; }
+.form-row .form-group:nth-child(1) { animation-delay: 0.08s; }
+.form-row .form-group:nth-child(2) { animation-delay: 0.16s; }
+.form-group:nth-child(2) { animation-delay: 0.24s; }
+.form-group:nth-child(3) { animation-delay: 0.32s; }
+.form-group:nth-child(4) { animation-delay: 0.40s; }
+.checkbox-group { animation-delay: 0.48s; }
+.submit-btn { 
+  animation: fadeInItem 0.4s ease-out forwards;
+  animation-delay: 0.56s;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+/* ============================================
+   FORM LABELS
+   ============================================ */
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--grey-900);
+  margin-bottom: 0.5rem;
+}
+
+.required {
+  color: var(--green-600);
+  margin-left: 0.25rem;
+}
+
+/* Fieldset (for radio group) */
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+fieldset .form-label {
+  margin-bottom: 0.75rem;
+}
+
+/* ============================================
+   FORM INPUTS
+   ============================================ */
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--grey-500);
+  background-color: var(--white);
+  color: var(--grey-900);
+  font-family: 'Karla', sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-input:hover {
+  background-color: var(--input-hover-bg);
+  border-color: var(--green-600);
+}
+
+.form-input:focus {
+  background-color: var(--white);
+  border-color: var(--green-600);
+  box-shadow: 0 0 0 3px hsla(169, 82%, 27%, 0.25);
+}
+
+/* Textarea specific */
+.form-textarea {
+  resize: none;
+  min-height: 6rem;
+}
+
+/* Error state */
+.form-input.error {
+  border-color: var(--red);
+}
+
+.form-input.error:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px hsla(0, 66%, 54%, 0.15);
+}
+
+/* ============================================
+   ERROR MESSAGES
+   ============================================ */
+
+.error-message {
+  font-size: 0.875rem;
+  color: var(--red);
+  margin-top: 0.25rem;
+  /* Hidden by default */
+  display: none;
+  /* Slide in animation */
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.2s ease-out;
+}
+
+.error-message.show {
+  display: block;
+  opacity: 1;
+  max-height: 100px;
+}
+
+/* ============================================
+   RADIO BUTTONS
+   ============================================ */
+
+.radio-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .radio-group {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--grey-500);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.radio-label:hover {
+  border-color: var(--green-600);
+  background-color: var(--input-hover-bg);
+}
+
+/* Hide native radio input */
+.radio-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Radio icon (provided SVG) */
+.radio-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  position: absolute;
+  left: 1rem;
+}
+
+/* Empty circle placeholder (visible when unchecked) */
+.radio-label::before {
+  content: '';
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1px solid var(--grey-500);
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease;
+}
+
+/* Hide placeholder circle when checked, show icon instead */
+.radio-input:checked ~ .radio-icon {
+  opacity: 1;
+}
+
+.radio-input:checked + .radio-icon ~ .radio-text::before {
+  /* Keep the spacing but hide the circle */
+}
+
+.radio-label.selected::before {
+  opacity: 0;
+}
+
+/* Selected label background */
+.radio-label.selected {
+  background-color: var(--green-200);
+  border-color: var(--green-600);
+}
+
+.radio-label.selected .radio-icon {
+  opacity: 1;
+}
+
+/* Focus state for keyboard navigation */
+.radio-input:focus-visible ~ .radio-icon {
+  outline: 2px solid var(--green-600);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+.radio-text {
+  color: var(--grey-900);
+  font-size: 1rem;
+  margin-left: 0.75rem;
+}
+
+/* ============================================
+   CHECKBOX
+   ============================================ */
+
+.checkbox-group {
+  padding-top: 1rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox-label:hover .checkbox-text {
+  color: var(--green-600);
+  transition: color 0.2s ease;
+}
+
+/* Hide native checkbox */
+.checkbox-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Checkbox icon (provided SVG - full checkbox with check) */
+.checkbox-icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Show icon when checked */
+.checkbox-input:checked ~ .checkbox-icon {
+  opacity: 1;
+}
+
+/* Placeholder for unchecked state */
+.checkbox-label::before {
+  content: '';
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 1px solid var(--grey-500);
+  border-radius: 0.125rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  background-color: var(--white);
+  transition: all 0.2s ease;
+}
+
+/* Hide placeholder when checked */
+.checkbox-input:checked ~ * {
+  /* Checkbox icon will be visible */
+}
+
+.checkbox-input:checked + .checkbox-icon ~ .checkbox-text::before {
+  display: none;
+}
+
+/* Adjust layout so icon overlays the placeholder */
+.checkbox-icon {
+  position: absolute;
+  left: 0;
+  margin-right: 0;
+}
+
+.checkbox-label {
+  padding-left: 2.125rem;
+  position: relative;
+}
+
+.checkbox-label::before {
+  position: absolute;
+  left: 0;
+  margin-right: 0;
+}
+
+/* Focus state for keyboard navigation */
+.checkbox-input:focus-visible ~ .checkbox-icon {
+  outline: 2px solid var(--green-600);
+  outline-offset: 2px;
+  border-radius: 0.125rem;
+}
+
+.checkbox-input:focus-visible + .checkbox-icon::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--green-600);
+  border-radius: 0.125rem;
+}
+
+.checkbox-text {
+  color: var(--grey-900);
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .checkbox-text {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   SUBMIT BUTTON
+   ============================================ */
+
+.submit-btn {
+  width: 100%;
+  background-color: var(--green-600);
+  color: var(--white);
+  font-family: 'Karla', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background-color: var(--grey-900);
+}
+
+.submit-btn:focus-visible {
+  outline: 2px solid var(--green-600);
+  outline-offset: 2px;
+}
+
+.submit-btn:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hide text when loading, show spinner */
+.submit-btn.loading .btn-text {
+  display: none;
+}
+
+.submit-btn.loading .loading-spinner {
+  display: block;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+[hidden] {
+  display: none !important;
+}
